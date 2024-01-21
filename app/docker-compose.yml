@@ -1,0 +1,51 @@
+version: '3'
+services:
+  rabbitmq:
+      image: "rabbitmq:3-management-alpine"
+      restart: unless-stopped
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+      healthcheck:
+          test: nc -z localhost 15672
+          
+  apartment: 
+    build: ./apartment
+    ports:
+      - "5001:5000"
+    volumes:
+      - shared-volume:/app  
+    depends_on:
+      - rabbitmq
+
+  search:
+    build: ./search
+    ports:
+      - "5002:5000"
+    volumes:
+      - shared-volume:/app
+    depends_on:
+      - rabbitmq  
+  
+  booking:
+    build: ./booking
+    ports:
+      - "5003:5000"
+    volumes:
+      - shared-volume:/app  
+    depends_on:
+      - rabbitmq
+
+  api_gateway:
+    build: ./api_gateway
+    ports:
+      - "5000:5000"
+    volumes:
+      - shared-volume:/app  
+    depends_on:
+      - apartment
+      - booking
+      - search
+      
+volumes:
+  shared-volume:

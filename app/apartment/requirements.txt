@@ -1,0 +1,6 @@
+flask
+requests
+pymongo
+python-dateutil
+python-decouple
+pika

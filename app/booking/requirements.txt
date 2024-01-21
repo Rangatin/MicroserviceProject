@@ -1,0 +1,5 @@
+flask
+requests
+pymongo
+python-dateutil
+pika

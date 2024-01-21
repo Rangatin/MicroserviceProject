@@ -1,0 +1,11 @@
+# Use an official Python runtime as a parent image
+FROM python:3.10
+WORKDIR /home
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+COPY requirements.txt requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 5000
+COPY . .
+CMD ["flask", "run"]
