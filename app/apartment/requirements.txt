@@ -3,4 +3,5 @@ requests
 pymongo
 python-dateutil
 python-decouple
+dotenv
 pika

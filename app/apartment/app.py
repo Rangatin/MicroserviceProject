@@ -1,16 +1,21 @@
 from flask import Flask, jsonify, request
 from bson import ObjectId, json_util
 from pymongo import MongoClient
+from dotenv import load_dotenv
 
+import os
 import pika
+
+load_dotenv()
+
+db_url = os.getenv("CONNECTION_STRING")
 
 app = Flask(__name__)
 
 connection_params = pika.ConnectionParameters('rabbitmq', port=5672)
 queue_name = 'main_message_queue'
 
-CONNECTION_STRING = "mongodb+srv://inkoment:fTkEai7e59QGvKId@contemporarycluster.apusbpu.mongodb.net/ContemporaryCluster"
-client = MongoClient(CONNECTION_STRING)
+client = MongoClient(db_url)
 database_name = "apartment_db"
 
 
